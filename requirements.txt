@@ -1,0 +1,67 @@
+# TapeBall Pro — requirements
+#
+# This is a Node.js / Next.js project, so the authoritative dependency manifest
+# is package.json (installed with `npm install`). This file lists everything the
+# project needs in one place — system prerequisites, exact package versions,
+# environment variables and setup steps — for anyone deploying or reviewing it.
+# Versions below match package-lock.json as of 2026-09-20.
+
+# ---------------------------------------------------------------------------
+# System prerequisites
+# ---------------------------------------------------------------------------
+node>=20.9.0          # Next.js 16 requires Node 20.9+; developed on Node 26
+npm>=10               # ships with Node
+sqlite3               # optional CLI for inspecting prisma/dev.db (Prisma bundles its own engine)
+
+# ---------------------------------------------------------------------------
+# Runtime dependencies (package.json "dependencies")
+# ---------------------------------------------------------------------------
+next==16.3.5          # framework — App Router, Turbopack; upgraded from 14.2 to clear CVEs
+react==19.3.0
+react-dom==19.3.0
+@prisma/client==5.22.0   # ORM client over SQLite
+lucide-react==1.47.0     # icons (>=1.x needed for React 19)
+clsx==2.1.1
+tailwind-merge==2.6.1
+
+# ---------------------------------------------------------------------------
+# Development dependencies (package.json "devDependencies")
+# ---------------------------------------------------------------------------
+typescript==5.9.3
+prisma==5.22.0           # CLI: generate client, push schema, studio
+ts-node==10.9.2          # runs prisma/seed.ts
+tailwindcss==3.4.19
+postcss==8.5.26
+autoprefixer==10.5.4
+@types/node==20.19.43
+@types/react==19.3.0
+@types/react-dom==19.3.0
+
+# ---------------------------------------------------------------------------
+# Environment variables (see .env.example)
+# ---------------------------------------------------------------------------
+# ADMIN_PASSWORD   organiser/scorer password. Unset = site runs open (private
+#                  network only). Set = every write needs a sign-in at /login,
+#                  or an "Authorization: Bearer <password>" header.
+# NODE_ENV         "production" for `npm start`; Prisma query logging is on in
+#                  development only.
+# PORT             optional; `next start -p <port>` also works.
+#
+# The database is a single SQLite file at prisma/dev.db (path fixed in
+# prisma/schema.prisma); no DATABASE_URL is needed.
+
+# ---------------------------------------------------------------------------
+# Setup
+# ---------------------------------------------------------------------------
+# npm install
+# cp .env.example .env         # then set ADMIN_PASSWORD
+# npm run setup                # prisma generate + db push + seed (wipes the DB)
+# npm run dev                  # http://localhost:3000
+#
+# Production:
+# npm run build && npm start
+#
+# Verify:
+# npm run typecheck            # tsc --noEmit
+# npm test                     # integration suites against a running server
+#                              # (ADMIN_PASSWORD=<pw> npm test when auth is on)

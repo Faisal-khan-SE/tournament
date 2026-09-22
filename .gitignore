@@ -1,0 +1,21 @@
+# dependencies
+node_modules
+
+# next.js
+.next
+next-env.d.ts
+
+# typescript
+*.tsbuildinfo
+
+# secrets — never commit; copy .env.example to .env instead
+.env
+.env.local
+.env.*.local
+
+# local sqlite database (created by `npm run setup`)
+prisma/dev.db
+prisma/dev.db-journal
+
+# os
+.DS_Store
